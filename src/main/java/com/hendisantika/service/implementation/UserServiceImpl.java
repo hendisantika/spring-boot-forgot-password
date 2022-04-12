@@ -1,5 +1,6 @@
 package com.hendisantika.service.implementation;
 
+import com.hendisantika.entity.User;
 import com.hendisantika.repository.RoleRepository;
 import com.hendisantika.repository.UserRepository;
 import com.hendisantika.service.framework.UserService;
@@ -29,5 +30,10 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
     }
 }
