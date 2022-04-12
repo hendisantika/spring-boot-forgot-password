@@ -68,6 +68,7 @@ public class UserServiceImpl implements UserService {
             user.setRoles(new HashSet<>(Collections.singletonList(role)));
             return userRepository.save(user);
         }
-        return null;
+        userRepository.save(user);
+        return user;
     }
 }
