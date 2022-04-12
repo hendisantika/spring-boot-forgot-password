@@ -1,5 +1,6 @@
 package com.hendisantika.service.implementation;
 
+import com.hendisantika.entity.PasswordResetToken;
 import com.hendisantika.repository.PasswordResetTokenRepository;
 import com.hendisantika.service.framework.PasswordResetTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +22,10 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
     @Autowired
     public PasswordResetTokenServiceImpl(PasswordResetTokenRepository passwordResetTokenRepository) {
         this.passwordResetTokenRepository = passwordResetTokenRepository;
+    }
+
+    @Override
+    public PasswordResetToken findByToken(String token) {
+        return passwordResetTokenRepository.findByToken(token).orElse(null);
     }
 }
