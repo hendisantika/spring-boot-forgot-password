@@ -1,6 +1,7 @@
 package com.hendisantika.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.hendisantika.service.framework.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -18,10 +19,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  * Time: 08.27
  */
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
