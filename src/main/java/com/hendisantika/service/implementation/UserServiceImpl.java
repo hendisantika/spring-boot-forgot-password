@@ -1,5 +1,6 @@
 package com.hendisantika.service.implementation;
 
+import com.hendisantika.entity.Role;
 import com.hendisantika.entity.User;
 import com.hendisantika.repository.RoleRepository;
 import com.hendisantika.repository.UserRepository;
@@ -11,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.HashSet;
 
 /**
  * Created by IntelliJ IDEA.
@@ -54,5 +58,16 @@ public class UserServiceImpl implements UserService {
     public void updatePassword(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+    }
+
+    @Override
+    public User save(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Role role = roleRepository.findById(1L).orElse(null);
+        if (role != null) {
+            user.setRoles(new HashSet<>(Collections.singletonList(role)));
+            return userRepository.save(user);
+        }
+        return null;
     }
 }
