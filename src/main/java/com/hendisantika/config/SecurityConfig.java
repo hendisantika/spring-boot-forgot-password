@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,8 +23,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
 
-    private PasswordEncoder passwordEncoder;
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
@@ -38,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers(
-                        "/signup**",
+                        "/signup**", "/assets/**", "/static/**", "/blog.css/**",
                         "/forgot-password**",
                         "/reset-password**").permitAll()
                 .antMatchers(
@@ -49,7 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-//                .successForwardUrl("/")
                 .and()
                 .logout()
                 .permitAll();
