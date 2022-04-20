@@ -1,6 +1,9 @@
 server:
   port: 8080
 spring:
+  config:
+    activate:
+      on-profile: local
   datasource:
     url: jdbc:mysql://localhost:3306/password_reset?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Jakarta&useSSL=false
     username: root
@@ -17,8 +20,8 @@ spring:
   mail:
     default-encoding: UTF-8
     host: smtp.gmail.com
-    username: username
-    password: password
+    username: hendisantika@gmail.com
+    password: fqeluyyxjlofsyov
     port: 587
     properties:
       mail:
@@ -27,7 +30,42 @@ spring:
           starttls:
             enable: true
             required: true
-          connectiontimeout: 30000
+          connection-timeout: 30000
+          timeout: 30000
+    protocol: smtp
+    test-connection: false
+---
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/password_reset
+    username: hendisantika
+    password: hendi
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  config:
+    activate:
+      on-profile: dev
+  messages:
+    basename: base
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    username: hendisantika@gmail.com
+    password: fqeluyyxjlofsyov
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connection-timeout: 30000
           timeout: 30000
     protocol: smtp
     test-connection: false
