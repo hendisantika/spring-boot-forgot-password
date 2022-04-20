@@ -37,7 +37,7 @@ spring:
 ---
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/password_reset
+    url: jdbc:postgresql://localhost:5432/password_reset
     username: hendisantika
     password: hendi
   jpa:
