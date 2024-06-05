@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.9</version>
+        <version>3.3.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.hendisantika</groupId>
@@ -14,7 +14,7 @@
     <name>spring-boot-reset-password</name>
     <description>spring-boot-reset-password</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>21</java.version>
         <bootstrap.version>4.2.1</bootstrap.version>
         <jquery.version>3.4.1</jquery.version>
         <fontAwesome.version>5.12.0</fontAwesome.version>

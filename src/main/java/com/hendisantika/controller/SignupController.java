@@ -2,6 +2,8 @@ package com.hendisantika.controller;
 
 import com.hendisantika.entity.User;
 import com.hendisantika.service.framework.UserService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
 import java.util.Locale;
 
 /**
@@ -27,15 +28,16 @@ import java.util.Locale;
  */
 @Controller
 @RequestMapping("/signup")
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class SignupController {
     private final UserService userService;
     private final MessageSource messageSource;
 
-    @Autowired
-    public SignupController(UserService userService, MessageSource messageSource) {
-        this.userService = userService;
-        this.messageSource = messageSource;
-    }
+//    @Autowired
+//    public SignupController(UserService userService, MessageSource messageSource) {
+//        this.userService = userService;
+//        this.messageSource = messageSource;
+//    }
 
     @GetMapping
     public String viewPage() {
