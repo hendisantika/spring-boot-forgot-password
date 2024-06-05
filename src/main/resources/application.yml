@@ -19,9 +19,9 @@ spring:
     basename: base
   mail:
     default-encoding: UTF-8
-    host: smtp.gmail.com
-    username: hendisantika@gmail.com
-    password: fqeluyyxjlofsyov
+    host: ${YOUR_HOST:yuji}
+    username: hendisantika@yahoo.co.id
+    password: ${YOUR_PASSWORD:yuji}
     port: 587
     properties:
       mail:
@@ -56,7 +56,7 @@ spring:
     default-encoding: UTF-8
     host: smtp.gmail.com
     username: yuji@yopmail.com
-    password:
+    password: ${YOUR_PASSWORD:yuji}
     port: 587
     properties:
       mail:
