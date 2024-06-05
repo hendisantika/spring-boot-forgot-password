@@ -38,8 +38,8 @@ spring:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/password_reset
-    username: hendisantika
-    password: hendi
+    username: postgres
+    password: hendi34
   jpa:
     hibernate:
       ddl-auto: update
@@ -54,9 +54,9 @@ spring:
     basename: base
   mail:
     default-encoding: UTF-8
-    host: smtp.gmail.com
-    username: hendisantika@gmail.com
-    password: fqeluyyxjlofsyov
+    host: http://webmail.adira.co.id
+    username: notif.ad1remarketing@adira.co.id
+    password:
     port: 587
     properties:
       mail:
