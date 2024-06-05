@@ -54,8 +54,8 @@ spring:
     basename: base
   mail:
     default-encoding: UTF-8
-    host: http://webmail.adira.co.id
-    username: notif.ad1remarketing@adira.co.id
+    host: smtp.gmail.com
+    username: yuji@yopmail.com
     password:
     port: 587
     properties:

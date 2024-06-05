@@ -1,12 +1,16 @@
 package com.hendisantika.config;
 
-import com.hendisantika.service.framework.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,37 +22,60 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  * Time: 08.27
  */
 @Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
-    private final UserService userService;
+    private final UserDetailsService userDetailService;
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userService)
-                .passwordEncoder(new BCryptPasswordEncoder());
+    private final PasswordEncoder passwordEncoder;
+
+//    @Bean
+//    public BCryptPasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+
+//    @Bean
+//    public UserDetailsService userDetailsServiceBean() {
+//        return new UserServiceImpl(userRepository);
+//    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+
+        authProvider.setUserDetailsService(userDetailService);
+        authProvider.setPasswordEncoder(passwordEncoder);
+
+        return authProvider;
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .antMatchers(
-                        "/signup**", "/assets/**", "/static/**", "/blog.css/**",
+                .authorizeHttpRequests(req -> req
+                                .requestMatchers(
+                                        "/signup**", "/signup",
+                                        "/assets/**", "/static/**", "/blog.css/**",
                         "/forgot-password**",
-                        "/reset-password**").permitAll()
-                .antMatchers(
+                                        "/reset-password**",
                         "/js/**",
                         "/css/**",
                         "/img/**",
                         "/webjars/**").permitAll()
                 .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .and()
-                .logout()
-                .permitAll();
+                )
+                .formLogin(formLogin -> formLogin
+//                        .loginPage("/login") //enable this to go to your own custom login page
+                        .loginProcessingUrl("/login") //enable this to use login page provided by spring security
+                        .defaultSuccessUrl("/", true)
+                        .failureUrl("/login?error"))
+                .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/login?logout"));
+        http.authenticationProvider(authenticationProvider());
+        return http.build();
     }
 
 }
